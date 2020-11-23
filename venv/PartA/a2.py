@@ -17,14 +17,14 @@ class EtherPartA2(MRJob):
             if len(fields) == 7:
                 time_epoch = int(fields[6])
                 month = time.strftime("%b %Y", time.gmtime(time_epoch))
-                amount = float(fields[4]*fields[5])
-                yield None, (month, amount)
+                amount = float(fields[4])*float(fields[5])
+
+                yield month, amount
         except:
             pass
 
-    def reducer(self, month, amounts):
-        total = 0
-        yield (month, sum(amounts))
+    def reducer(self, month, amount):
+        yield month, sum(amount)
 
 if __name__ == '__main__':
     EtherPartA2.run()
